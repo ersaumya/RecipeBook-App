@@ -9,7 +9,10 @@ export class RecipeService{
     constructor(private slService:ShoppingListService){
 
     }
-   
+   setRecipes(recipes:Recipe[]){
+        this.recipes=recipes;
+        this.recipeChanged.next(this.recipes.slice());
+   }
     private recipes: Recipe[] =[
         new Recipe('Paneer Masala',
         'Tasty paneer masala with indian spice',
