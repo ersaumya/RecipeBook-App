@@ -1,20 +1,33 @@
 import { Component, OnInit } from '@angular/core';
 import * as firebase from 'firebase';
+import { Event, Router, NavigationStart, NavigationEnd,NavigationCancel,NavigationError } from '@angular/router';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
- loadedFeature='recipe';
- ngOnInit(){
-  firebase.initializeApp({
-    apiKey: "Put your own api key here from firebase",
-    authDomain: "Put your own domain from firebase",
-  });
- }
+export class AppComponent implements OnInit {
+  showLoadingIndicator = true;
+  constructor(private router: Router) {
+    this.router.events.subscribe((routerEvent: Event) => {
+      if (routerEvent instanceof NavigationStart) {
+        this.showLoadingIndicator = true;
+      }
+      if (routerEvent instanceof NavigationEnd || routerEvent instanceof NavigationCancel 
+        || routerEvent instanceof NavigationError  ) {
+        this.showLoadingIndicator = false;
+      }
+    })
+  }
+  loadedFeature = 'recipe';
+  ngOnInit() {
+    firebase.initializeApp({
+      apiKey: "***************************************",
+      authDomain: "***************************************",
+    });
+  }
 
- onNavigate(feature:string){
-    this.loadedFeature=feature;
- }
+  onNavigate(feature: string) {
+    this.loadedFeature = feature;
+  }
 }
