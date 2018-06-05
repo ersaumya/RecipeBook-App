@@ -2,6 +2,7 @@ import { RecipeService } from './../recipe.service';
 import { Component, OnInit} from '@angular/core';
 import { Recipe } from '../recipes.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-recipe-details',
@@ -13,7 +14,8 @@ export class RecipeDetailsComponent implements OnInit {
  id:number;
   constructor(private recipeService:RecipeService,
               private route:ActivatedRoute,
-              private router:Router) { }
+              private router:Router,
+              private authService:AuthService) { }
 
   ngOnInit() {
     this.route.params
@@ -33,5 +35,8 @@ export class RecipeDetailsComponent implements OnInit {
   onDeleteRecipe(){
     this.recipeService.deleteRecipe(this.id);
     this.router.navigate(['/recipes']);
+  }
+  isAuthenticated() {
+    return this.authService.isAuthenticated();
   }
 }

@@ -1,3 +1,4 @@
+import { AuthService } from './../../auth/auth.service';
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Recipe } from '../recipes.model';
@@ -15,7 +16,8 @@ export class RecipeListComponent implements OnInit,OnDestroy {
   recipes: Recipe[];
   constructor(private recipeService:RecipeService,
               private router:Router,
-              private route:ActivatedRoute) { }
+              private route:ActivatedRoute,
+            private authService:AuthService) { }
 
   ngOnInit() {
     this.subscription=this.recipeService.recipeChanged
@@ -32,4 +34,7 @@ export class RecipeListComponent implements OnInit,OnDestroy {
   ngOnDestroy(){
     this.subscription.unsubscribe();
  }
+ isAuthenticated() {
+  return this.authService.isAuthenticated();
+}
 }
